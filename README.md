@@ -31,7 +31,7 @@ If you use django 1.7 look this [django official docs](https://docs.djangoprojec
 	>>> print len(SampleModel.objects.all())
 	>>> 10
 ```
-If model have ForeignKey, It also make automatically create related objects.   
+If model have ForeignKey, It also automatically create related objects.   
 ```python
 	class ParentModel(models.Model):
     	text = models.TextField()
