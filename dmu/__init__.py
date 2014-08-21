@@ -43,7 +43,7 @@ def auto_create_objects(model):
             if 'IntegerField' in field_type or 'SmallIntegerField' in field_type:
                 fields += field.name+"=1,"
             elif 'ForeignKey' in field_type or 'OneToOneField' in field_type:
-                auto_create_objects_proto(field.rel.to)
+                auto_create_objects(field.rel.to)
 
 
                 if not key_counter.has_key(model.__name__+'_'+field.rel.to.__name__):
