@@ -29,6 +29,8 @@ def get_hand_type_fields(model):
                 result += field.name+"='', "
 
 
+key_counter = {}
+
 def auto_create_objects(model):
     '''
         It's proto feature"
