@@ -23,13 +23,13 @@ If you use django 1.7 look this [django official docs](https://docs.djangoprojec
 	>>> from base.models import SampleModel
 	>>> 
     >>> print len(SampleModel.objects.all())
-	>>> 0
+	0
     >>>
 	>>> for x in xrange(10):
 	>>>    auto_create_objects(SampleModel)
     >>>
 	>>> print len(SampleModel.objects.all())
-	>>> 10
+	10
 ```
 If model have ForeignKey, It also automatically create related objects.   
 ```python
