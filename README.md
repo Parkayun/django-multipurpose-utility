@@ -19,7 +19,7 @@ HTTP Response with application/json type.
 If you use django 1.7 look this [django official docs](https://docs.djangoproject.com/en/1.7/ref/request-response/#jsonresponse-objects)
 
 ##AutoCreator
-Auto create models objects.
+Auto create model's objects.
 ```python
 	>>> from dmu import AutoCreator
 	>>> from base.models import SampleModel
@@ -41,7 +41,7 @@ If model have ForeignKey, It also automatically create related objects.
 	class ChildModel(models.Model):
     	parent = models.ForeignKey(ParentModel)
 ```
-This model working like this.
+This feature working like this.
 ```python
 	AutoCreator().run(ChildModel)
     > ParentModel.objects.create(text='blahblah')

@@ -4,7 +4,7 @@ from dmu import AutoCreator
 
 
 class DmuTests(TestCase):
-    def test_auto_create_objects(self):
+    def test_auto_creator(self):
         object_count = 10
 
         from base.models import SampleModel
