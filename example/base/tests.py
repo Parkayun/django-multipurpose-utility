@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from dmu import auto_create_objects
+from dmu import AutoCreator
 
 
 class DmuTests(TestCase):
@@ -11,6 +11,6 @@ class DmuTests(TestCase):
         self.assertNotEqual(len(SampleModel.objects.all()), object_count)
 
         for x in xrange(object_count):
-            auto_create_objects(SampleModel)
+            AutoCreator().run(SampleModel)
 
         self.assertEqual(len(SampleModel.objects.all()), object_count)

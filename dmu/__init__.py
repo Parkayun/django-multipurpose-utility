@@ -29,44 +29,45 @@ def get_hand_type_fields(model):
                 result += field.name+"='', "
 
 
-key_counter = {}
+class AutoCreator(object):
+    def __init__(self):
+        self.key_counter = {}
 
-def auto_create_objects(model):
-    '''
-        It's proto feature"
-    '''
-    fields = ''
-    #print ' '
-    for field in model._meta.fields:
-        if not field.has_default() and (not field.blank and not field.null):
-            field_type = field.get_internal_type()
-            if 'IntegerField' in field_type or 'SmallIntegerField' in field_type:
-                fields += field.name+"=1,"
-            elif 'ForeignKey' in field_type or 'OneToOneField' in field_type:
-                auto_create_objects(field.rel.to)
+    def run(self, model):
+        field_query = ''
+        for field in model._meta.fields:
+            if not field.has_default() and (not field.blank and not field.null):
+                field_type = field.get_internal_type()
 
+                if 'IntegerField' in field_type or 'SmallIntegerField' in field_type:
+                    field_query += field.name+"=1,"
 
-                if not key_counter.has_key(model.__name__+'_'+field.rel.to.__name__):
-                    key_counter[model.__name__+'_'+field.rel.to.__name__] = -1
-                key_counter[model.__name__+'_'+field.rel.to.__name__] += 1
+                elif 'ForeignKey' in field_type or 'OneToOneField' in field_type:
+                    parent_model = field.rel.to
+                    self.run(parent_model)
 
-                idx = key_counter[model.__name__+'_'+field.rel.to.__name__]
+                    counter_key = model.__name__+'_'+field.rel.to.__name__
+                    if not self.key_counter.has_key(counter_key):
+                        self.key_counter[counter_key] = -1
+                    self.key_counter[counter_key] += 1
 
-                key_field = field.rel.to.__name__ + '.objects.all()['+str(idx)+']'
-                fields += field.name+"="+key_field+", "
+                    idx = self.key_counter[counter_key]
+                    key_field = parent_model.__name__ + '.objects.all()['+str(idx)+']'
+                    field_query += field.name+"="+key_field+", "
 
+                    exec 'from '+parent_model.__module__+' import '+parent_model.__name__
 
-                exec 'from '+field.rel.to.__module__+' import '+field.rel.to.__name__
-                #print 'from '+field.rel.to.__module__+' import '+field.rel.to.__name__
-            else:
-                max_length = 10
-                if field.max_length and max_length > field.max_length:
-                    max_length = field.max_length
-                import random
-                dummy = ''.join([chr(random.randint(97, 122)) for _ in xrange(max_length)])
-                fields += field.name+"='"+dummy+"', "
-    exec 'from '+model.__module__+' import '+model.__name__
-    #print 'from '+model.__module__+' import '+model.__name__
-    query = model._meta.object_name+'.objects.create('+fields+')'
-    #print query+'\n'
-    eval(query)
+                else:
+                    max_length = 10
+                    if field.max_length and max_length > field.max_length:
+                        max_length = field.max_length
+
+                    import random
+                    value = ''.join([chr(random.randint(97, 122)) for _ in xrange(max_length)])
+
+                    field_query += field.name+"='"+value+"', "
+
+        exec 'from '+model.__module__+' import '+model.__name__
+
+        query = model._meta.object_name+'.objects.create('+field_query+')'
+        eval(query)

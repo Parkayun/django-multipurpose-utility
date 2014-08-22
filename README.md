@@ -3,7 +3,8 @@
 [django-multipurpose-utility](https://github.com/Parkayun/django-multipurpose-utility) is a super simple utility.
 
 ## Functions
-* Json Response
+* ##Json Response
+HTTP Response with application/json type. 
 ```python
     from dmu import json_response
 	def home(request):
@@ -17,16 +18,17 @@
 ```
 If you use django 1.7 look this [django official docs](https://docs.djangoproject.com/en/1.7/ref/request-response/#jsonresponse-objects)
 
-* Auto create model objects
+* ##AutoCreator
+Auto create models objects.
 ```python
-	>>> from dmu import auto_create_objects
+	>>> from dmu import AutoCreator
 	>>> from base.models import SampleModel
 	>>> 
     >>> print len(SampleModel.objects.all())
 	>>> 0
     >>>
 	>>> for x in xrange(10):
-	>>>    auto_create_objects(SampleModel)
+	>>>    AutoCreator().run(SampleModel)
     >>>
 	>>> print len(SampleModel.objects.all())
 	>>> 10
@@ -41,7 +43,8 @@ If model have ForeignKey, It also automatically create related objects.
 ```
 This model working like this.
 ```python
-	auto_create_objects(ChildModel)
+	AutoCreator().run(ChildModel)
     > ParentModel.objects.create(text='blahblah')
     > ChildModel.objects.create(parent=ParentModel.objects.all()[0])
 ```
+Check about [AutoCreator test](https://github.com/Parkayun/django-multipurpose-utility/blob/master/example/base/tests.py)
