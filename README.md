@@ -2,8 +2,8 @@
 
 [django-multipurpose-utility](https://github.com/Parkayun/django-multipurpose-utility) is a super simple utility.
 
-## Functions
-* ##Json Response
+# Functions
+##Json Response
 HTTP Response with application/json type. 
 ```python
     from dmu import json_response
@@ -18,7 +18,7 @@ HTTP Response with application/json type.
 ```
 If you use django 1.7 look this [django official docs](https://docs.djangoproject.com/en/1.7/ref/request-response/#jsonresponse-objects)
 
-* ##AutoCreator
+##AutoCreator
 Auto create models objects.
 ```python
 	>>> from dmu import AutoCreator
