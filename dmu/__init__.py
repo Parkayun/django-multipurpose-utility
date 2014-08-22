@@ -57,6 +57,14 @@ class AutoCreator(object):
 
                     exec 'from '+parent_model.__module__+' import '+parent_model.__name__
 
+                elif field_type in ['DateField', 'DateTimeField'] and (not field.auto_now and not field.auto_now_add):
+                    if 'start' in field.name or 'begin' in field.name:
+                        field_query += field.name+"='2014-01-01', "
+                    elif 'end' in field.name:
+                        field_query += field.name+"='2014-12-31', "
+                    else:
+                        field_query += field.name+"='2014-06-06', "
+
                 else:
                     max_length = 10
                     if field.max_length and max_length > field.max_length:
