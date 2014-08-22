@@ -25,13 +25,13 @@ Auto create models objects.
 	>>> from base.models import SampleModel
 	>>> 
     >>> print len(SampleModel.objects.all())
-	>>> 0
+	0
     >>>
 	>>> for x in xrange(10):
 	>>>    AutoCreator().run(SampleModel)
     >>>
 	>>> print len(SampleModel.objects.all())
-	>>> 10
+	10
 ```
 If model have ForeignKey, It also automatically create related objects.   
 ```python
