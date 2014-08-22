@@ -39,10 +39,10 @@ class AutoCreator(object):
             if not field.has_default() and (not field.blank and not field.null):
                 field_type = field.get_internal_type()
 
-                if 'IntegerField' in field_type or 'SmallIntegerField' in field_type:
+                if field_type in ['IntegerField', 'SmallIntegerField']:
                     field_query += field.name+"=1,"
 
-                elif 'ForeignKey' in field_type or 'OneToOneField' in field_type:
+                elif field_type in ['ForeignKey', 'OneToOneField']:
                     parent_model = field.rel.to
                     self.run(parent_model)
 
